@@ -3,8 +3,14 @@ import fitz, base64
 
 app = Flask(__name__)
 
-@app.route("/add-pdf-toc", methods=["POST"])
+@app.route("/add-pdf-toc", methods=["GET", "POST"])
 def add_pdf_toc():
+    if request.method == "GET":
+        return jsonify({
+            "status": "READY",
+            "message": "Send a POST request with base64 PDF content to generate a hyperlinked TOC."
+        })
+
     try:
         data = request.get_json()
         pdf_b64 = data["fileContent"]
@@ -17,7 +23,7 @@ def add_pdf_toc():
         if not toc:
             return jsonify({"status": "ERROR", "error": "No bookmarks found"}), 400
 
-        # Insert TOC pages (same logic as before)
+        # TOC insertion logic
         LEFT, RIGHT, TOP = 54, 54, 54
         LINE_H, FS = 18, 11
         FONT, COLOR = "helv", (0, 0, 1)
@@ -57,6 +63,12 @@ def add_pdf_toc():
         out_bytes = doc.tobytes()
         doc.close()
         return jsonify({"status": "OK", "fileContent": base64.b64encode(out_bytes).decode("ascii")})
+    except Exception as e:
+        return jsonify({"status": "ERROR", "error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
     except Exception as e:
         return jsonify({"status": "ERROR", "error": str(e)}), 500
 
