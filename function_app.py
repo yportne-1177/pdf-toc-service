@@ -23,7 +23,7 @@ def add_pdf_toc():
         if not toc:
             return jsonify({"status": "ERROR", "error": "No bookmarks found"}), 400
 
-        # TOC insertion logic
+        # Insert TOC pages
         LEFT, RIGHT, TOP = 54, 54, 54
         LINE_H, FS = 18, 11
         FONT, COLOR = "helv", (0, 0, 1)
@@ -69,8 +69,3 @@ def add_pdf_toc():
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 
-    except Exception as e:
-        return jsonify({"status": "ERROR", "error": str(e)}), 500
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
