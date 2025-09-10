@@ -1,4 +1,3 @@
-cat > start.sh <<'SH'
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
@@ -36,6 +35,3 @@ fi
 
 echo "🚀 Starting Flask app: $APP_FILE on 0.0.0.0:$PORT ..."
 python "$APP_FILE"
-SH
-
-chmod +x start.sh
