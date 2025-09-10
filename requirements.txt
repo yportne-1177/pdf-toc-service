@@ -1,2 +1,3 @@
 flask
 pymupdf==1.24.9
+gunicorn
